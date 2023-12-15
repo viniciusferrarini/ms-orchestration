@@ -1,15 +1,13 @@
 package com.vncsferrarini.conductor.infra.listener;
 
+import com.vncsferrarini.conductor.infra.dto.EventMessage;
 import com.vncsferrarini.conductor.infra.events.EventProcessor;
 import com.vncsferrarini.conductor.infra.events.EventProcessorType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-
-import static com.vncsferrarini.conductor.infra.events.EventProcessorType.resolve;
 
 @Slf4j
 @Component
@@ -22,9 +20,9 @@ public class EventListener {
     }
 
     @RabbitListener(queues = "events_queue")
-    public void listen(final Message message) {
+    public <T extends EventMessage<T>> void listen(final EventMessage<T> message) {
         log.info(message.toString());
-        eventProcessors.get(resolve(message.getMessageProperties().getHeader("event"))).process();
+        eventProcessors.get(message.getEvent()).process(message.getData());
     }
 
 }
