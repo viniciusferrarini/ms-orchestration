@@ -1,0 +1,8 @@
+{
+  "headers": {
+    "event": "CREATE_PAYMENT"
+  },
+  "data": {
+    "message": "teste"
+  }
+}
