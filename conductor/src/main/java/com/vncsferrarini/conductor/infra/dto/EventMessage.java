@@ -1,29 +1,21 @@
 package com.vncsferrarini.conductor.infra.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.vncsferrarini.conductor.infra.events.EventProcessorType;
+import com.vncsferrarini.conductor.infra.events.EventType;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Map;
 
-import static com.vncsferrarini.conductor.infra.events.EventProcessorType.resolve;
+import static com.vncsferrarini.conductor.infra.events.EventType.resolve;
 
 @Builder
 @RequiredArgsConstructor
-public class EventMessage<T> implements Serializable {
+public class EventMessage {
 
-    @JsonProperty("headers")
-    private final Map<String, String> headers;
+    private final Map<String, Object> headers;
 
-    @Getter
-    @JsonProperty("data")
-    private final T data;
-
-    public EventProcessorType getEvent() {
-        return resolve(this.headers.get("event"));
+    public final EventType getEvent() {
+        return resolve(headers.get("event").toString());
     }
 
 }

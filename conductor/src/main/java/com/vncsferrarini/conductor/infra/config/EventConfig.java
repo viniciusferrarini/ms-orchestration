@@ -1,7 +1,8 @@
 package com.vncsferrarini.conductor.infra.config;
 
+import com.vncsferrarini.conductor.infra.dto.EventMessage;
 import com.vncsferrarini.conductor.infra.events.EventProcessor;
-import com.vncsferrarini.conductor.infra.events.EventProcessorType;
+import com.vncsferrarini.conductor.infra.events.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +16,7 @@ import static java.util.stream.Collectors.toMap;
 public class EventConfig {
 
     @Bean
-    public Map<EventProcessorType, EventProcessor> getEventProcessors(List<EventProcessor> processors) {
+    public Map<EventType, EventProcessor<EventMessage>> getEventProcessors(List<EventProcessor<EventMessage>> processors) {
         return processors.stream()
                 .collect(toMap(EventProcessor::getEvent, Function.identity()));
     }

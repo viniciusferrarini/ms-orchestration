@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import static java.util.Arrays.stream;
 
 @RequiredArgsConstructor
-public enum EventProcessorType {
+public enum EventType {
 
     CREATE_PAYMENT,
     NAO_SEI;
 
-    public static EventProcessorType resolve(final String event) {
+    public static EventType resolve(final String event) {
         return stream(values())
                 .filter(e -> e.name().equals(event))
                 .findFirst()
